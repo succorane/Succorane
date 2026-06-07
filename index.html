@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxPrime Properties | Premium Real Estate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .heading-font { font-family: 'Playfair Display', sans-serif; }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/id/1015/1920/1080');
+            background-size: cover;
+            background-position: center;
+        }
+        .property-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .property-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #10b981;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover:after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-800">
+    <!-- Navbar -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl">L</div>
+                <div>
+                    <span class="heading-font text-2xl font-semibold tracking-tight">LuxPrime</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#home" class="nav-link text-zinc-600 hover:text-zinc-900">Home</a>
+                <a href="#properties" class="nav-link text-zinc-600 hover:text-zinc-900">Properties</a>
+                <a href="#about" class="nav-link text-zinc-600 hover:text-zinc-900">About</a>
+                <a href="#services" class="nav-link text-zinc-600 hover:text-zinc-900">Services</a>
+                <a href="#contact" class="nav-link text-zinc-600 hover:text-zinc-900">Contact</a>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSearch()" 
+                        class="p-3 hover:bg-zinc-100 rounded-2xl transition-colors">
+                    <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                </button>
+                <button onclick="showLoginModal()" 
+                        class="px-6 py-3 text-sm font-semibold border border-zinc-300 hover:border-zinc-400 rounded-3xl transition-colors">
+                    Login
+                </button>
+                <button onclick="contactAgent()" 
+                        class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-3xl transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>Contact Agent</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="home" class="hero-bg h-screen flex items-center text-white">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="max-w-2xl mx-auto">
+                <h1 class="heading-font text-6xl md:text-7xl font-bold leading-none mb-6 tracking-tighter">
+                    Find Your Dream<br>Property Today
+                </h1>
+                <p class="text-xl text-zinc-200 mb-10">
+                    Premium homes, luxury apartments &amp; investment opportunities in Lagos and beyond.
+                </p>
+                
+                <!-- Quick Search -->
+                <div class="bg-white rounded-3xl p-2 shadow-2xl max-w-2xl mx-auto">
+                    <div class="flex flex-col md:flex-row gap-2">
+                        <div class="flex-1 relative">
+                            <input id="searchInput" 
+                                   type="text" 
+                                   placeholder="Search by location (e.g. Ikoyi, Lekki)" 
+                                   class="w-full px-8 py-5 bg-zinc-100 rounded-3xl focus:outline-none text-zinc-800 text-lg">
+                        </div>
+                        <button onclick="performSearch()" 
+                                class="md:w-auto w-full px-12 py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-3xl flex items-center justify-center gap-3 transition-all">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>Search</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mt-8 flex justify-center gap-8 text-sm">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-check text-emerald-400"></i>
+                        <span>Verified Listings</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-check text-emerald-400"></i>
+                        <span>Expert Agents</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <i class="fa-solid fa-chevron-down text-4xl text-white/70"></i>
+        </div>
+    </section>
+
+    <!-- Featured Properties -->
+    <section id="properties" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <span class="uppercase tracking-[3px] text-emerald-600 text-sm font-medium">DISCOVER</span>
+                    <h2 class="heading-font text-5xl font-semibold tracking-tight mt-2">Featured Properties</h2>
+                </div>
+                <a href="#" onclick="showAllProperties()" 
+                   class="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-medium group">
+                    View all properties 
+                    <span class="group-hover:translate-x-1 transition">→</span>
+                </a>
+            </div>
+            
+            <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-24 bg-zinc-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <img src="https://picsum.photos/id/1016/800/600" alt="LuxPrime Office" 
+                         class="rounded-3xl shadow-xl w-full">
+                </div>
+                <div>
+                    <span class="uppercase text-emerald-600 text-sm font-medium tracking-widest">OUR STORY</span>
+                    <h2 class="heading-font text-5xl font-semibold tracking-tighter mt-4 leading-none">
+                        Excellence in Luxury Real Estate Since 2015
+                    </h2>
+                    <p class="mt-8 text-lg text-zinc-600 leading-relaxed">
+                        LuxPrime Properties is Lagos' premier real estate agency specializing in luxury homes, 
+                        waterfront properties, and high-yield investment opportunities. With over 300 properties sold 
+                        and a team of dedicated professionals, we turn dreams into addresses.
+                    </p>
+                    <div class="grid grid-cols-3 gap-8 mt-12">
+                        <div>
+                            <div class="text-4xl font-semibold text-emerald-600">300+</div>
+                            <div class="text-sm text-zinc-500 mt-1">Properties Sold</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-semibold text-emerald-600">98%</div>
+                            <div class="text-sm text-zinc-500 mt-1">Client Satisfaction</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-semibold text-emerald-600">45</div>
+                            <div class="text-sm text-zinc-500 mt-1">Expert Agents</div>
+                        </div>
+                    </div>
+                    <button onclick="contactAgent()" 
+                            class="mt-12 px-10 py-5 bg-zinc-900 hover:bg-black text-white rounded-3xl font-semibold inline-flex items-center gap-3">
+                        Meet Our Team
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="uppercase tracking-[3px] text-emerald-600 text-sm font-medium">WHAT WE OFFER</span>
+                <h2 class="heading-font text-5xl font-semibold tracking-tight mt-3">Our Services</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-zinc-50 p-10 rounded-3xl group hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-zinc-100">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">🏠</div>
+                    <h3 class="text-2xl font-semibold mb-3">Property Sales</h3>
+                    <p class="text-zinc-600">Expert marketing and sales of residential and commercial properties across Nigeria.</p>
+                </div>
+                <div class="bg-zinc-50 p-10 rounded-3xl group hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-zinc-100">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">🔑</div>
+                    <h3 class="text-2xl font-semibold mb-3">Property Leasing</h3>
+                    <p class="text-zinc-600">Find premium rental properties or list yours for maximum returns.</p>
+                </div>
+                <div class="bg-zinc-50 p-10 rounded-3xl group hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-zinc-100">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">📈</div>
+                    <h3 class="text-2xl font-semibold mb-3">Investment Advisory</h3>
+                    <p class="text-zinc-600">Strategic guidance on real estate investments with detailed market analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 bg-zinc-900 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="heading-font text-5xl font-semibold tracking-tight">What Our Clients Say</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-zinc-800 p-8 rounded-3xl">
+                    <div class="flex gap-1 text-amber-400 mb-6">
+                        ★★★★☆
+                    </div>
+                    <p class="italic text-zinc-300">"LuxPrime helped me find my dream home in Banana Island within weeks. Their attention to detail is unmatched."</p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <img src="https://picsum.photos/id/64/80/80" class="w-12 h-12 rounded-full object-cover" alt="">
+                        <div>
+                            <div class="font-medium">Dr. Adebayo Okonkwo</div>
+                            <div class="text-sm text-zinc-500">Ikoyi, Lagos</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-zinc-800 p-8 rounded-3xl">
+                    <div class="flex gap-1 text-amber-400 mb-6">
+                        ★★★★★
+                    </div>
+                    <p class="italic text-zinc-300">"Sold my Lekki Phase 1 property for above asking price. Professional team with excellent negotiation skills."</p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <img src="https://picsum.photos/id/91/80/80" class="w-12 h-12 rounded-full object-cover" alt="">
+                        <div>
+                            <div class="font-medium">Mrs. Fatima Yusuf</div>
+                            <div class="text-sm text-zinc-500">Lekki, Lagos</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-zinc-800 p-8 rounded-3xl">
+                    <div class="flex gap-1 text-amber-400 mb-6">
+                        ★★★★☆
+                    </div>
+                    <p class="italic text-zinc-300">"Their market insights helped me make a smart investment decision. Highly recommended for serious buyers."</p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <img src="https://picsum.photos/id/201/80/80" class="w-12 h-12 rounded-full object-cover" alt="">
+                        <div>
+                            <div class="font-medium">Chief Chukwuma Eze</div>
+                            <div class="text-sm text-zinc-500">Victoria Island</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="heading-font text-5xl font-semibold tracking-tighter">Let's Find Your Next Home</h2>
+                    <p class="mt-6 text-zinc-600 text-lg">Fill out the form and our team will get in touch within 24 hours.</p>
+                    
+                    <form id="contactForm" onsubmit="handleSubmit(event)" class="mt-10 space-y-6">
+                        <div class="grid grid-cols-2 gap-6">
+                            <input type="text" id="name" placeholder="Full Name" required
+                                   class="px-6 py-5 bg-zinc-100 rounded-3xl focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <input type="tel" id="phone" placeholder="Phone Number" required
+                                   class="px-6 py-5 bg-zinc-100 rounded-3xl focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <input type="email" id="email" placeholder="Email Address" required
+                               class="w-full px-6 py-5 bg-zinc-100 rounded-3xl focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <textarea id="message" rows="5" placeholder="Tell us what you're looking for..." required
+                                  class="w-full px-6 py-5 bg-zinc-100 rounded-3xl focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-y"></textarea>
+                        <button type="submit"
+                                class="w-full py-6 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-3xl text-lg transition-all">
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="space-y-8 pt-8 md:pt-0">
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">📍</div>
+                        <div>
+                            <div class="font-medium text-lg">Head Office</div>
+                            <div class="text-zinc-600">12 Adeola Odeku Street, Victoria Island, Lagos</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">📞</div>
+                        <div>
+                            <div class="font-medium text-lg">Call Us</div>
+                            <a href="tel:+2348030000000" class="text-zinc-600 hover:text-emerald-600">+234 803 000 0000</a>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">✉️</div>
+                        <div>
+                            <div class="font-medium text-lg">Email</div>
+                            <a href="mailto:info@luxprime.ng" class="text-zinc-600 hover:text-emerald-600">info@luxprime.ng</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-900 text-zinc-400 py-20">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center gap-3 text-white mb-6">
+                    <div class="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center text-2xl font-bold">L</div>
+                    <span class="heading-font text-3xl font-semibold">LuxPrime</span>
+                </div>
+                <p class="text-sm">Premium real estate services in Lagos and Nigeria.</p>
+            </div>
+            <div>
+                <div class="font-medium text-white mb-6">Quick Links</div>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#properties" class="hover:text-white">Properties</a></li>
+                    <li><a href="#" class="hover:text-white">Buy</a></li>
+                    <li><a href="#" class="hover:text-white">Rent</a></li>
+                    <li><a href="#" class="hover:text-white">Sell</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="font-medium text-white mb-6">Company</div>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#about" class="hover:text-white">About Us</a></li>
+                    <li><a href="#" class="hover:text-white">Our Team</a></li>
+                    <li><a href="#" class="hover:text-white">Careers</a></li>
+                    <li><a href="#" class="hover:text-white">Blog</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="font-medium text-white mb-6">Follow Us</div>
+                <div class="flex gap-6 text-2xl">
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+                <div class="mt-12 text-xs">
+                    © 2026 LuxPrime Properties. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Property Modal -->
+    <div id="propertyModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
+        <div class="bg-white rounded-3xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-hidden">
+            <div class="p-8">
+                <div class="flex justify-between items-start">
+                    <div id="modalTitle" class="heading-font text-3xl font-semibold"></div>
+                    <button onclick="closeModal()" class="text-3xl text-zinc-400 hover:text-black">×</button>
+                </div>
+                <div id="modalImage" class="my-8 rounded-2xl overflow-hidden aspect-video bg-zinc-200"></div>
+                
+                <div class="flex gap-8 text-sm">
+                    <div>
+                        <div class="text-emerald-600 font-medium">PRICE</div>
+                        <div id="modalPrice" class="text-3xl font-semibold"></div>
+                    </div>
+                    <div>
+                        <div class="text-emerald-600 font-medium">LOCATION</div>
+                        <div id="modalLocation" class="font-medium"></div>
+                    </div>
+                </div>
+                
+                <div id="modalDescription" class="mt-8 text-zinc-600 leading-relaxed"></div>
+            </div>
+            
+            <div class="border-t p-8 flex gap-4">
+                <button onclick="closeModal()" 
+                        class="flex-1 py-5 border border-zinc-300 rounded-3xl font-medium">Close</button>
+                <button onclick="contactAgent()" 
+                        class="flex-1 py-5 bg-emerald-600 text-white rounded-3xl font-medium">Schedule Viewing</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="hidden fixed inset-0 bg-black/70 z-[110] flex items-center justify-center">
+        <div class="bg-white rounded-3xl w-full max-w-lg mx-4 p-8">
+            <h3 class="text-2xl font-semibold mb-6">Search Properties</h3>
+            <input id="modalSearchInput" type="text" placeholder="Location, price range, type..." 
+                   class="w-full px-6 py-5 bg-zinc-100 rounded-3xl mb-6">
+            <button onclick="performModalSearch()" 
+                    class="w-full py-6 bg-emerald-600 text-white rounded-3xl font-semibold">Search Now</button>
+            <button onclick="toggleSearch()" 
+                    class="mt-4 w-full py-6 text-zinc-500">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample Properties
+        const properties = [
+            {
+                id: 1,
+                title: "Luxury 5-Bedroom Mansion",
+                location: "Banana Island, Lagos",
+                price: "₦1.2 Billion",
+                image: "https://picsum.photos/id/1015/800/600",
+                description: "Stunning waterfront mansion with private jetty, infinity pool, home cinema, and smart home features. 1200 sqm of pure luxury."
+            },
+            {
+                id: 2,
+                title: "Modern 4-Bedroom Terrace",
+                location: "Lekki Phase 1, Lagos",
+                price: "₦450 Million",
+                image: "https://picsum.photos/id/133/800/600",
+                description: "Beautifully finished terrace house in a gated estate. Features spacious living areas, fitted kitchen, and beautiful garden."
+            },
+            {
+                id: 3,
+                title: "Executive 3-Bedroom Apartment",
+                location: "Ikoyi, Lagos",
+                price: "₦380 Million",
+                image: "https://picsum.photos/id/201/800/600",
+                description: "Prime location apartment with breathtaking lagoon views. Fully serviced with gym, pool, and 24hr security."
+            }
+        ];
+
+        // Render Properties
+        function renderProperties(filteredProperties = properties) {
+            const container = document.getElementById('propertiesGrid');
+            container.innerHTML = '';
+            
+            filteredProperties.forEach(property => {
+                const card = document.createElement('div');
+                card.className = 'property-card bg-white rounded-3xl overflow-hidden cursor-pointer border border-zinc-100';
+                card.innerHTML = `
+                    <div class="relative">
+                        <img src="${property.image}" class="w-full h-64 object-cover" alt="${property.title}">
+                        <div class="absolute top-4 right-4 bg-white px-4 py-1 rounded-3xl text-sm font-medium shadow">
+                            ${property.price}
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="font-medium text-xl">${property.title}</div>
+                        <div class="flex items-center gap-2 text-zinc-500 mt-1 mb-4">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>${property.location}</span>
+                        </div>
+                        <button onclick="viewProperty(${property.id}); event.stopImmediatePropagation()" 
+                                class="w-full py-4 text-sm font-semibold border border-zinc-300 hover:bg-zinc-50 rounded-3xl transition">
+                            View Details
+                        </button>
+                    </div>
+                `;
+                card.onclick = () => viewProperty(property.id);
+                container.appendChild(card);
+            });
+        }
+
+        // View Property
+        function viewProperty(id) {
+            const property = properties.find(p => p.id === id);
+            if (!property) return;
+            
+            document.getElementById('modalTitle').textContent = property.title;
+            document.getElementById('modalPrice').textContent = property.price;
+            document.getElementById('modalLocation').textContent = property.location;
+            document.getElementById('modalDescription').innerHTML = `<p>${property.description}</p>`;
+            
+            const imageContainer = document.getElementById('modalImage');
+            imageContainer.innerHTML = `<img src="${property.image}" class="w-full h-full object-cover">`;
+            
+            document.getElementById('propertyModal').classList.remove('hidden');
+            document.getElementById('propertyModal').classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('propertyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Search
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (!query) {
+                renderProperties();
+                return;
+            }
+            
+            const filtered = properties.filter(p => 
+                p.location.toLowerCase().includes(query) || 
+                p.title.toLowerCase().includes(query)
+            );
+            renderProperties(filtered);
+            
+            // Scroll to properties
+            document.getElementById('properties').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleSearch() {
+            const modal = document.getElementById('searchModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                setTimeout(() => document.getElementById('modalSearchInput').focus(), 300);
+            }
+        }
+
+        function performModalSearch() {
+            const query = document.getElementById('modalSearchInput').value.toLowerCase().trim();
+            toggleSearch();
+            
+            if (!query) {
+                renderProperties();
+                return;
+            }
+            
+            const filtered = properties.filter(p => 
+                p.location.toLowerCase().includes(query) || 
+                p.title.toLowerCase().includes(query)
+            );
+            renderProperties(filtered);
+            document.getElementById('properties').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Form Submit
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert("Thank you! Our team will contact you shortly.");
+            e.target.reset();
+        }
+
+        function contactAgent() {
+            alert("Agent will contact you shortly. Thank you for choosing LuxPrime Properties!");
+        }
+
+        function showLoginModal() {
+            alert("Demo Login - In a real site this would open an authentication modal.");
+        }
+
+        function showAllProperties() {
+            renderProperties();
+            document.getElementById('properties').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize
+        window.onload = function() {
+            renderProperties();
+            
+            // Tailwind script already loaded via CDN
+            console.log('%cLuxPrime Properties website ready! 🏠', 'color: #10b981; font-size: 14px; font-weight: 600');
+        };
+    </script>
+</body>
+</html>
